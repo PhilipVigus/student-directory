@@ -17,7 +17,7 @@ def input_students
 end
 
 def input_first_letter_filter
-  puts "Please input a starting letter to filter the names by (press enter to ignore)"
+  puts "Please input a starting letter to filter the names by (leave empty for no filter)"
 
   # loop until we get a valid letter filter
   loop do
@@ -31,17 +31,38 @@ def input_first_letter_filter
   end
 end
 
+def input_name_length_filter
+  puts "Do you want to show only names with less than 12 letters (y/n)?"
+
+  loop do
+    filter_by_length = gets.chomp.downcase
+
+    if filter_by_length == 'y'
+      return true
+    elsif filter_by_length == 'n'
+      return false
+    else
+      puts "You must enter either 'y' or 'n'"
+    end
+  end
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-def print(students, first_letter_filter)
+def print(students, first_letter_filter, filter_by_name_length)
   # check to see if we need to filter by the first letter
   if first_letter_filter != ""
     filtered_students = filter_names_by_first_letter(students, first_letter_filter)
   else
     filtered_students = students.dup
+  end
+
+  # check to see if we need to filter out names > 11 in length
+  if filter_by_name_length
+    filtered_students = filter_names_by_length(filtered_students)
   end
 
   filtered_students.each_with_index do |student, index|
@@ -54,12 +75,17 @@ def filter_names_by_first_letter(students, first_letter_filter)
   students.select { |student| student[:name][0].downcase == first_letter_filter }
 end
 
+def filter_names_by_length(students)
+  students.select { |student| student[:name].length < 12 }
+end
+
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
 
 students = input_students
 first_letter_filter = input_first_letter_filter
+filter_by_name_length = input_name_length_filter
 print_header
-print(students, first_letter_filter)
+print(students, first_letter_filter, filter_by_name_length)
 print_footer(students)
