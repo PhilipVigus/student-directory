@@ -19,7 +19,7 @@ def input_students
         puts "The last record: Name - #{students[-1][:name]}, Cohort - #{students[-1][:cohort]}, has been deleted"
         students.pop()
       end
-      
+
       next
     elsif name == ""
       # the user has entered a blank name, so they've finished
@@ -29,7 +29,6 @@ def input_students
 
     puts "Cohort?"
     cohort = gets.chomp
-
     # set a default if no cohort is given
     if cohort == ""
       cohort = :march
@@ -37,7 +36,12 @@ def input_students
       cohort = cohort.downcase.to_sym
     end
 
-    students << { name: name, cohort: cohort }
+    puts "Country of Birth (defaults to UK if none given)?"
+    country = gets.chomp
+    # set a default to UK if no country is given
+    country = "UK" if country == ""
+
+    students << { name: name, cohort: cohort, country: country }
   end
 
   # return students
@@ -94,7 +98,7 @@ def print(students, first_letter_filter, filter_by_name_length)
   end
 
   filtered_students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) #{student[:country]}"
   end
 end
 
