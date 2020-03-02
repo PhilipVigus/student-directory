@@ -1,9 +1,25 @@
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+  puts "Please enter the names and cohorts of the students"
+  puts "If cohort is left blank, the closest cohort (March) will be used"
+  puts "To finish, just enter a blank name"
 
   students = []
-  name = gets.chomp
+
+  loop do
+    puts "Name: "
+    name = gets.chomp
+    return students if name == ""
+
+    puts "Cohort: "
+    cohort = gets.chomp
+    if cohort == ""
+      cohort = :march
+    else
+      cohort = cohort.downcase.to_sym
+    end
+
+    students << { name: name, cohort: cohort }
+  end
 
   # take names until the user inputs an empty name
   while !name.empty? do
