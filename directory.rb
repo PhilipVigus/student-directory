@@ -26,33 +26,21 @@ def input_students
       return students
     end
 
-    puts "Cohort (defaults to march if none given)?"
-    cohort = gets.chomp
-
-    # set to march if no cohort is given
-    if cohort == ""
-      cohort = :march
-    else
-      cohort = cohort.downcase.to_sym
-    end
-
-    puts "Country of Birth (defaults to UK if none given)?"
-    country = gets.chomp
-
-    # set to UK if no country is given
-    country = "UK" if country == ""
-
-    puts "Previous school?"
-    school = gets.chomp
-
-    # set to n/a if no country is given
-    school = "n/a" if school == ""
+    cohort = input_additional_student_info("Cohort?", "March").downcase.to_sym
+    country = input_additional_student_info("Country of birth?", "UK")
+    school = input_additional_student_info("Previous school?", "n/a")
 
     students << { name: name, cohort: cohort, country: country, school: school }
   end
 
   # return students
   students
+end
+
+def input_additional_student_info(prompt, default="")
+  puts default == "" ? prompt : prompt + " (Defaults to #{default} if none given)"
+  response = gets.chomp
+  return response == "" ? default : response
 end
 
 def input_first_letter_filter
