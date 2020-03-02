@@ -17,15 +17,14 @@ def input_students
 end
 
 def input_filters
-  filter_set = false
   puts "Please input a starting letter to filter the names by (press enter to ignore)"
 
-  while !filter_set do
+  # loop until we get a valid letter filter
+  loop do
     letter_filter = gets.chomp
-
     # only return if the filter is "" or a single character
     if letter_filter.length < 2
-      return letter_filter
+      return letter_filter.downcase
     else
       puts "The filter must be either empty or a single character"
     end
@@ -37,9 +36,14 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
+def print(students, filters)
   students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    # only display if no letter filter is set or the first letter of the name matches the filter
+    first_letter_of_name = student[:name][0].downcase
+
+    if filters == "" || first_letter_of_name == filters
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -50,5 +54,5 @@ end
 students = input_students
 filters = input_filters
 print_header
-print(students)
+print(students, filters)
 print_footer(students)
