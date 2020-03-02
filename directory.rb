@@ -93,7 +93,14 @@ def print(students, first_letter_filter, filter_by_name_length)
   end
 
   filtered_students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) #{student[:country]} #{student[:school]}"
+
+    # pad the start and ends of the strings so output aligns nicely
+    name_display_string = student[:name].center(20)
+    cohort_display_string = student[:cohort].to_s.capitalize.center(10)
+    country_display_string = student[:country].center(20)
+    school_display_string = student[:school].center(20)
+
+    puts "#{index + 1}. #{name_display_string} | #{cohort_display_string} | #{country_display_string} | #{school_display_string} |"
   end
 end
 
