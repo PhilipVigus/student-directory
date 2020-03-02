@@ -1,6 +1,5 @@
 def input_students
-  puts "Please enter the names and cohorts of the students"
-  puts "If cohort is left blank, the closest cohort (March) will be used"
+  puts "Please enter the names and personal details of the students"
   puts "If you make a mistake with a name or cohort, enter DELETE for the next student name. This will delete the last student you entered"
   puts "To finish, just enter a blank name"
 
@@ -27,9 +26,10 @@ def input_students
       return students
     end
 
-    puts "Cohort?"
+    puts "Cohort (defaults to march if none given)?"
     cohort = gets.chomp
-    # set a default if no cohort is given
+
+    # set to march if no cohort is given
     if cohort == ""
       cohort = :march
     else
@@ -38,10 +38,17 @@ def input_students
 
     puts "Country of Birth (defaults to UK if none given)?"
     country = gets.chomp
-    # set a default to UK if no country is given
+
+    # set to UK if no country is given
     country = "UK" if country == ""
 
-    students << { name: name, cohort: cohort, country: country }
+    puts "Previous school?"
+    school = gets.chomp
+
+    # set to n/a if no country is given
+    school = "n/a" if school == ""
+
+    students << { name: name, cohort: cohort, country: country, school: school }
   end
 
   # return students
@@ -98,7 +105,7 @@ def print(students, first_letter_filter, filter_by_name_length)
   end
 
   filtered_students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) #{student[:country]}"
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) #{student[:country]} #{student[:school]}"
   end
 end
 
