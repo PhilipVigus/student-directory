@@ -16,7 +16,7 @@ def input_students
   students
 end
 
-def input_filters
+def input_first_letter_filter
   puts "Please input a starting letter to filter the names by (press enter to ignore)"
 
   # loop until we get a valid letter filter
@@ -36,15 +36,22 @@ def print_header
   puts "-------------"
 end
 
-def print(students, filters)
-  students.each_with_index do |student, index|
-    # only display if no letter filter is set or the first letter of the name matches the filter
-    first_letter_of_name = student[:name][0].downcase
-
-    if filters == "" || first_letter_of_name == filters
-      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-    end
+def print(students, first_letter_filter)
+  # check to see if we need to filter by the first letter
+  if first_letter_filter != ""
+    filtered_students = filter_names_by_first_letter(students, first_letter_filter)
+  else
+    filtered_students = students.dup
   end
+
+  filtered_students.each_with_index do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
+def filter_names_by_first_letter(students, first_letter_filter)
+  # compare the first letter of the name to the letter filter
+  students.select { |student| student[:name][0].downcase == first_letter_filter }
 end
 
 def print_footer(names)
@@ -52,7 +59,7 @@ def print_footer(names)
 end
 
 students = input_students
-filters = input_filters
+first_letter_filter = input_first_letter_filter
 print_header
-print(students, filters)
+print(students, first_letter_filter)
 print_footer(students)
