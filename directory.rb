@@ -1,26 +1,30 @@
 def input_students
   puts "Please enter the names and cohorts of the students"
   puts "If cohort is left blank, the closest cohort (March) will be used"
-  puts "If you make a mistake with a name, enter DELETE for the next student name. This will delete the last student you entered"
+  puts "If you make a mistake with a name or cohort, enter DELETE for the next student name. This will delete the last student you entered"
   puts "To finish, just enter a blank name"
 
   students = []
 
   loop do
-    puts "Name: "
+    puts "Name?"
     name = gets.chomp
 
     if name == "DELETE"
-      # delete the last student that was entered
-      puts "#{students[-1][:name]} has been deleted"
+      # delete the last student that was entered and go
+      # to the next iteration so we ask for another name
+      puts "The last record: Name - #{students[-1][:name]}, Cohort - #{students[-1][:cohort]}, has been deleted"
       students.pop()
       next
     elsif name == ""
+      # the user has entered a blank name, so they've finished
+      # return the array of students
       return students
     end
 
-    puts "Cohort: "
+    puts "Cohort?"
     cohort = gets.chomp
+
     # set a default if no cohort is given
     if cohort == ""
       cohort = :march
