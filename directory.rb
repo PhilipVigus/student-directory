@@ -16,6 +16,22 @@ def input_students
   students
 end
 
+def input_filters
+  filter_set = false
+  puts "Please input a starting letter to filter the names by (press enter to ignore)"
+
+  while !filter_set do
+    letter_filter = gets.chomp
+
+    # only return if the filter is "" or a single character
+    if letter_filter.length < 2
+      return letter_filter
+    else
+      puts "The filter must be either empty or a single character"
+    end
+  end
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -32,6 +48,7 @@ def print_footer(names)
 end
 
 students = input_students
+filters = input_filters
 print_header
 print(students)
 print_footer(students)
