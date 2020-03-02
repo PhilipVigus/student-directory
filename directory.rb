@@ -42,7 +42,7 @@ def input_first_letter_filter
   end
 end
 
-def input_name_length_filter
+def name_length_filter?
   puts "Do you want to show only names with less than 12 letters (y/n)?"
 
   loop do
@@ -96,7 +96,7 @@ end
 
 students = input_students
 first_letter_filter = input_first_letter_filter
-filter_by_name_length = input_name_length_filter
+filter_by_name_length = name_length_filter?
 print_header
 print(students, first_letter_filter, filter_by_name_length)
 print_footer(students)
