@@ -11,10 +11,15 @@ def input_students
     name = gets.chomp
 
     if name == "DELETE"
-      # delete the last student that was entered and go
-      # to the next iteration so we ask for another name
-      puts "The last record: Name - #{students[-1][:name]}, Cohort - #{students[-1][:cohort]}, has been deleted"
-      students.pop()
+      if students.length == 0
+        puts "There are no students to delete"
+      else
+        # delete the last student that was entered and go
+        # to the next iteration so we ask for another name
+        puts "The last record: Name - #{students[-1][:name]}, Cohort - #{students[-1][:cohort]}, has been deleted"
+        students.pop()
+      end
+      
       next
     elsif name == ""
       # the user has entered a blank name, so they've finished
