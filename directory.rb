@@ -8,10 +8,12 @@ def input_students
   loop do
     puts "Name: "
     name = gets.chomp
+    # return if no name is given
     return students if name == ""
 
     puts "Cohort: "
     cohort = gets.chomp
+    # set a default if no cohort is given
     if cohort == ""
       cohort = :march
     else
@@ -19,13 +21,6 @@ def input_students
     end
 
     students << { name: name, cohort: cohort }
-  end
-
-  # take names until the user inputs an empty name
-  while !name.empty? do
-    students << { name: name, cohort: :november }
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
   end
 
   # return students
