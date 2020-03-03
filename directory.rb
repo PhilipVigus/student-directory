@@ -11,6 +11,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -26,6 +27,8 @@ def process(selection)
     input_students
   when "2"
     show_students
+  when "3"
+    save_students
   when "9"
     exit
   else
@@ -59,6 +62,23 @@ end
 
 def print_footer
   puts "Overall, we have #{@students.count} great students"
+end
+
+def save_students
+  # opens the file. If it doesn't exist it creates it
+  # w = write-only permission (for read-write it would be w+)
+  file = File.open("students.csv", "w")
+
+  @students.each do |student|
+    # create an array from the data we want to save, then join the array
+    # [name, cohort] => name,cohort
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
+    file.puts csv_line
+  end
+
+  file.close
 end
 
 interactive_menu
