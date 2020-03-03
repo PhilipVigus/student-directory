@@ -93,10 +93,7 @@ def save_students
 end
 
 def try_load_students
-  # take the first command line argument
-  filename = ARGV.first
-  # if it isn't there, set it to the default
-  filename = "students.csv" if filename.nil?
+  filename = ARGV.first || "students.csv"
 
   # does the file exist?
   if File.exists?(filename)
