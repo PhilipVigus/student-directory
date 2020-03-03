@@ -167,7 +167,11 @@ def print_students_from_cohort(students, cohort)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.length == 1
+    puts "Overall, we have #{names.count} great student"
+  else
+    puts "Overall, we have #{names.count} great students"
+  end
 end
 
 students = input_students
