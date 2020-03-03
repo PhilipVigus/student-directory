@@ -1,18 +1,11 @@
 # instance variable on the global instance?
 @students = []
 
-def print_interactive_menu
+def run_interactive_menu
   loop do
     print_menu
-    # we now have to specify STDIN because we're supplying a file as
-    # an argument when starting the script. By default, gets attempts
-    # to read from the supplied files
     process_selection(get_user_input)
   end
-end
-
-def get_user_input
-  STDIN.gets.chomp
 end
 
 def print_menu
@@ -21,12 +14,6 @@ def print_menu
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
   puts "9. Exit"
-end
-
-def print_students
-  print_header
-  print_student_list
-  print_footer
 end
 
 def process_selection(selection)
@@ -44,6 +31,16 @@ def process_selection(selection)
   else
     puts "I don't know what you meant, try again"
   end
+end
+
+def get_user_input
+  STDIN.gets.chomp
+end
+
+def print_students
+  print_header
+  print_student_list
+  print_footer
 end
 
 def input_students
@@ -125,4 +122,4 @@ def load_students_from_file(filename = "students.csv")
 end
 
 try_load_students
-print_interactive_menu
+run_interactive_menu
