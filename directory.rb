@@ -93,19 +93,18 @@ def try_load_students
   # take the first command line argument
   filename = ARGV.first
   # if it isn't there, don't try to load, so just return
-  return if filename.nil?
+  filename = "students.csv" if filename.nil?
 
   # does the file exist?
   if File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+    puts "Unable to find #{filename} so it will be created"
   end
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename)
   # opens in write mode
   file = File.open(filename, "r")
   # readlines reads the whole file and returns it as an array of individual lines
