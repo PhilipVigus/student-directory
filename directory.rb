@@ -50,7 +50,8 @@ def input_students
   name = STDIN.gets.chomp
   # take names until the user inputs an empty name
   while !name.empty? do
-    @students << { name: name, cohort: :november }
+    #@students << { name: name, cohort: :november }
+    create_student(name, :november)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
@@ -111,10 +112,15 @@ def load_students(filename = "students.csv")
   file.readlines.each do |line|
     # chomp gets rid of the trailing \n
     name, cohort = line.chomp.split(",")  # parallel assignment
-    @students << { name: name, cohort: cohort.to_sym}
+    #@students << { name: name, cohort: cohort.to_sym }
+    create_student(name, cohort.to_sym)
   end
 
   file.close
+end
+
+def create_student(name, cohort)
+  @students << { name: name, cohort: cohort }
 end
 
 try_load_students
