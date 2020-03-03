@@ -7,7 +7,7 @@ def input_students
 
   loop do
     puts "Name?"
-    name = gets.chomp
+    name = gets.slice(0..-2)
 
     if name == "DELETE"
       if students.length == 0
@@ -39,7 +39,7 @@ end
 
 def input_additional_student_info(prompt, default="")
   puts default == "" ? prompt : prompt + " (Defaults to #{default} if none given)"
-  response = gets.chomp
+  response = gets.slice(0..-2)
   return response == "" ? default : response
 end
 
