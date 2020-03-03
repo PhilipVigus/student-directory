@@ -4,7 +4,11 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+
+    # we now have to specify STDIN because we're supplying a file as
+    # an argument when starting the script. By default, gets attempts
+    # to read from the supplied files
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -43,12 +47,12 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
 
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # take names until the user inputs an empty name
   while !name.empty? do
     @students << { name: name, cohort: :november }
     puts "Now we have #{@students.count} students"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -84,9 +88,25 @@ def save_students
   file.close
 end
 
-def load_students
+def try_load_students
+  # take the first command line argument
+  filename = ARGV.first
+  # if it isn't there, don't try to load, so just return
+  return if filename.nil?
+
+  # does the file exist?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+def load_students(filename = "students.csv")
   # opens in write mode
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   # readlines reads the whole file and returns it as an array of individual lines
   file.readlines.each do |line|
     # chomp gets rid of the trailing \n
@@ -97,4 +117,5 @@ def load_students
   file.close
 end
 
+try_load_students
 interactive_menu
