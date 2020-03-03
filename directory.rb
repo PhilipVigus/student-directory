@@ -107,6 +107,29 @@ def print(students, first_letter_filter, filter_by_name_length)
   end
 end
 
+def print_by_cohort(students, first_letter_filter, filter_by_name_length)
+  # check to see if we need to filter by the first letter
+  if first_letter_filter != ""
+    filtered_students = filter_names_by_first_letter(students, first_letter_filter)
+  else
+    filtered_students = students.dup
+  end
+
+  # check to see if we need to filter out names > 11 in length
+  if filter_by_name_length
+    filtered_students = filter_names_by_length(filtered_students)
+  end
+
+  cohorts = get_cohorts(filtered_students)
+
+  cohorts.each do |cohort|
+    puts "--------------------------------------------"
+    puts "Students from the #{cohort} cohort"
+    puts "--------------------------------------------"
+    print_students_from_cohort(filtered_students, cohort)
+  end
+end
+
 def filter_names_by_first_letter(students, first_letter_filter)
   # compare the first letter of the name to the letter filter
   students.select { |student| student[:name][0].downcase == first_letter_filter }
@@ -114,6 +137,33 @@ end
 
 def filter_names_by_length(students)
   students.select { |student| student[:name].length < 12 }
+end
+
+def get_cohorts(students)
+  cohorts = []
+  students.each do |student|
+    if !cohorts.include? student[:cohort]
+      cohorts << student[:cohort]
+    end
+  end
+
+  return cohorts
+end
+
+def print_students_from_cohort(students, cohort)
+  student_count = 1
+  students.each do |student|
+    if student[:cohort] == cohort
+      # pad the start and ends of the strings so output aligns nicely
+      name_display_string = student[:name].center(20)
+      cohort_display_string = student[:cohort].to_s.capitalize.center(10)
+      country_display_string = student[:country].center(20)
+      school_display_string = student[:school].center(20)
+
+      puts "|  #{student_count}. #{name_display_string} | #{country_display_string} | #{school_display_string} |"
+      student_count += 1
+    end
+  end
 end
 
 def print_footer(names)
@@ -124,5 +174,5 @@ students = input_students
 first_letter_filter = input_first_letter_filter
 filter_by_name_length = name_length_filter?
 print_header
-print(students, first_letter_filter, filter_by_name_length)
+print_by_cohort(students, first_letter_filter, filter_by_name_length)
 print_footer(students)
