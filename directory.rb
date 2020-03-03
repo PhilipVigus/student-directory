@@ -19,7 +19,7 @@ end
 def process_selection(selection)
   case selection
   when "1"
-    input_students
+    get_students_from_user
   when "2"
     print_students
   when "3"
@@ -43,7 +43,7 @@ def print_students
   print_footer
 end
 
-def input_students
+def get_students_from_user
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
 
