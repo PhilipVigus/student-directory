@@ -20,9 +20,9 @@ def input_students
   students
 end
 
-def print-header
-  put "The students of my cohort at Makers Academy'
-  puts ``-------------``
+def print_header
+  puts "The students of my cohort at Makers Academy'
+  puts "-------------"
 end
 
 def print(students)
