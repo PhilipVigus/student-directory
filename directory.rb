@@ -92,15 +92,18 @@ def print(students, first_letter_filter, filter_by_name_length)
     filtered_students = filter_names_by_length(filtered_students)
   end
 
-  filtered_students.each_with_index do |student, index|
+  student_count = 0
 
+  while student_count < filtered_students.length do
     # pad the start and ends of the strings so output aligns nicely
-    name_display_string = student[:name].center(20)
-    cohort_display_string = student[:cohort].to_s.capitalize.center(10)
-    country_display_string = student[:country].center(20)
-    school_display_string = student[:school].center(20)
+    name_display_string = filtered_students[student_count][:name].center(20)
+    cohort_display_string = filtered_students[student_count][:cohort].to_s.capitalize.center(10)
+    country_display_string = filtered_students[student_count][:country].center(20)
+    school_display_string = filtered_students[student_count][:school].center(20)
 
-    puts "#{index + 1}. #{name_display_string} | #{cohort_display_string} | #{country_display_string} | #{school_display_string} |"
+    puts "#{student_count + 1}. #{name_display_string} | #{cohort_display_string} | #{country_display_string} | #{school_display_string} |"
+
+    student_count += 1
   end
 end
 
