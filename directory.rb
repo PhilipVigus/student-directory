@@ -1,13 +1,13 @@
 # instance variable on the global instance?
 @students = []
 
-def interactive_menu
+def print_interactive_menu
   loop do
     print_menu
     # we now have to specify STDIN because we're supplying a file as
     # an argument when starting the script. By default, gets attempts
     # to read from the supplied files
-    process(get_user_input)
+    process_selection(get_user_input)
   end
 end
 
@@ -23,22 +23,22 @@ def print_menu
   puts "9. Exit"
 end
 
-def show_students
+def print_students
   print_header
   print_student_list
   print_footer
 end
 
-def process(selection)
+def process_selection(selection)
   case selection
   when "1"
     input_students
   when "2"
-    show_students
+    print_students
   when "3"
     save_students
   when "4"
-    load_students
+    load_students_from_file
   when "9"
     exit
   else
@@ -57,6 +57,10 @@ def input_students
     puts "Now we have #{@students.count} students"
     name = get_user_input
   end
+end
+
+def create_student(name, cohort)
+  @students << { name: name, cohort: cohort }
 end
 
 def print_header
@@ -94,35 +98,31 @@ end
 def try_load_students
   # take the first command line argument
   filename = ARGV.first
-  # if it isn't there, don't try to load, so just return
+  # if it isn't there, set it to the default
   filename = "students.csv" if filename.nil?
 
   # does the file exist?
   if File.exists?(filename)
-    load_students(filename)
+    load_students_from_file(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Unable to find #{filename} so it will be created"
   end
 end
 
-def load_students(filename = "students.csv")
-  # opens in write mode
+def load_students_from_file(filename = "students.csv")
+  # opens in read mode
   file = File.open(filename, "r")
+
   # readlines reads the whole file and returns it as an array of individual lines
   file.readlines.each do |line|
     # chomp gets rid of the trailing \n
     name, cohort = line.chomp.split(",")  # parallel assignment
-    #@students << { name: name, cohort: cohort.to_sym }
     create_student(name, cohort.to_sym)
   end
 
   file.close
 end
 
-def create_student(name, cohort)
-  @students << { name: name, cohort: cohort }
-end
-
 try_load_students
-interactive_menu
+print_interactive_menu
