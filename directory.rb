@@ -108,6 +108,8 @@ def print(students, first_letter_filter, filter_by_name_length)
 end
 
 def print_by_cohort(students, first_letter_filter, filter_by_name_length)
+  return if students.length == 0
+  
   # check to see if we need to filter by the first letter
   if first_letter_filter != ""
     filtered_students = filter_names_by_first_letter(students, first_letter_filter)
@@ -169,6 +171,8 @@ end
 def print_footer(names)
   if names.length == 1
     puts "Overall, we have #{names.count} great student"
+  elsif names.length == 0
+    puts "There are currently no students on the system"
   else
     puts "Overall, we have #{names.count} great students"
   end
