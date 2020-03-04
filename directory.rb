@@ -80,12 +80,12 @@ def save_students(filename)
     puts "Unable to save file - you must provide a filename"
     return
   else
-  # opens the file. If it doesn't exist it creates it
+  # If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
-    file = File.open(filename, "w")
-    write_students_to_file(file)
-    file.close
-
+  # As we're using a block, we don't need to explicity close
+  # the file, as it happens automatically when the block
+  # finishes executing
+    File.open(filename, "w") { |file| write_students_to_file(file) }
     puts "Students successfully saved to #{filename}"
   end
 end
