@@ -37,12 +37,6 @@ def get_user_input
   STDIN.gets.chomp
 end
 
-def print_students
-  print_header
-  print_student_list
-  print_footer
-end
-
 def get_students_from_user
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -58,6 +52,12 @@ end
 
 def create_student(name, cohort)
   @students << { name: name, cohort: cohort }
+end
+
+def print_students
+  print_header
+  print_student_list
+  print_footer
 end
 
 def print_header
@@ -79,7 +79,6 @@ def save_students(filename)
   # opens the file. If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
   file = File.open(filename, "w")
-
   @students.each do |student|
     # create an array from the data we want to save, then join the array
     # [name, cohort] => name,cohort
@@ -88,7 +87,6 @@ def save_students(filename)
     # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
     file.puts csv_line
   end
-
   file.close
 end
 
