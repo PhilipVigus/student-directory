@@ -27,7 +27,7 @@ The full list of repo files is as follows:
 | Filename | Contents |
 | -------- | -------- |
 | README.md | This file |
-| 'directory - after step 8.rb' | The script after completing step 8 of the exercise, which asked me to make a number of changes to the code. Added functionality includes being able to filter the list by first name and name length, specify additional student information, and printing the list by cohort. |
+| 'directory - after step 8.rb' | The script after completing step 8 of the exercise, which asked me to make a number of changes to the code. Added functionality includes being able to filter the list by first name and name length, specify additional student information, and print the list by cohort. |
 | directory.rb | The script after fully completing the exercise, but missing out changes made in step 8. Added functionality includes an interactive menu and the ability to load and save the students entered from csv files. |
 | typos.rb | The script edited as part of step 8.1 to remove any bugs |
 | print_own_source.rb | The script created for step 14.8, which prints its own source code to screen |
