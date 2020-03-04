@@ -11,8 +11,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list"
+  puts "4. Load the list"
   puts "9. Exit"
 end
 
@@ -23,9 +23,9 @@ def process_selection(selection)
   when "2"
     print_students
   when "3"
-    save_students
+    save_students(get_filename_from_user)
   when "4"
-    load_students_from_file
+    load_students_from_file(get_filename_from_user)
   when "9"
     exit
   else
@@ -75,8 +75,7 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def save_students
-  filename = get_filename_from_user
+def save_students(filename)
   # opens the file. If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
   file = File.open(filename, "w")
@@ -110,18 +109,24 @@ def initialise_students
   end
 end
 
-def load_students_from_file(filename = "students.csv")
-  # opens in read mode
-  file = File.open(filename, "r")
+def load_students_from_file(filename)
 
-  # readlines reads the whole file and returns it as an array of individual lines
-  file.readlines.each do |line|
-    # chomp gets rid of the trailing \n
-    name, cohort = line.chomp.split(",")  # parallel assignment
-    create_student(name, cohort.to_sym)
+  if File.exists?(filename)
+    # opens in read mode
+    file = File.open(filename, "r")
+
+    # readlines reads the whole file and returns it as an array of individual lines
+    file.readlines.each do |line|
+      # chomp gets rid of the trailing \n
+      name, cohort = line.chomp.split(",")  # parallel assignment
+      create_student(name, cohort.to_sym)
+    end
+
+    file.close
+  else
+    puts "Unable to load as #{filename} does not exist"
   end
 
-  file.close
 end
 
 initialise_students
