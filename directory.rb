@@ -80,7 +80,7 @@ def save_students(filename)
     puts "Unable to save file - you must provide a filename"
     return
   else
-  # If it doesn't exist it creates it
+  # If the file doesn't exist this creates it before saving
   # w = write-only permission (for read-write it would be w+)
   # As we're using a block, we don't need to explicity close
   # the file, as it happens automatically when the block
@@ -113,10 +113,8 @@ end
 
 def load_students_from_file(filename)
   if File.exists?(filename)
-    file = File.open(filename, "r")
     # readlines reads the whole file and returns it as an array of individual lines
-    create_students_from_file_lines(file.readlines)
-    file.close
+    File.open(filename, "r") { |file| create_students_from_file_lines(file.readlines) }
     puts "Students successfully loaded from #{filename}"
   else
     puts "Unable to load file - #{filename} does not exist"
