@@ -85,6 +85,8 @@ def save_students(filename)
     file = File.open(filename, "w")
     write_students_to_file(file)
     file.close
+
+    puts "Students successfully saved to #{filename}"
   end
 end
 
@@ -115,6 +117,7 @@ def load_students_from_file(filename)
     # readlines reads the whole file and returns it as an array of individual lines
     create_students_from_file_lines(file.readlines)
     file.close
+    puts "Students successfully loaded from #{filename}"
   else
     puts "Unable to load file - #{filename} does not exist"
   end
