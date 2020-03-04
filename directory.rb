@@ -1,4 +1,5 @@
 require 'csv'
+require 'fileutils'
 
 # instance variable on the global instance?
 @students = []
@@ -78,28 +79,25 @@ def print_footer
 end
 
 def save_students(filename)
-  if filename == ""
-    puts "Unable to save file - you must provide a filename"
-    return
-  else
-  # If the file doesn't exist this creates it before saving
-  # w = write-only permission (for read-write it would be w+)
-  # As we're using a block, we don't need to explicity close
-  # the file, as it happens automatically when the block
-  # finishes executing
-    File.open(filename, "w") { |file| write_students_to_file(file) }
+  if filename != ""
+    #create_file_if_missing(filename)
+    write_students_to_csv_file(filename)
     puts "Students successfully saved to #{filename}"
+  else
+    puts "Unable to save file - you must provide a filename"
   end
 end
 
-def write_students_to_file(file)
-  @students.each do |student|
-    # create an array from the data we want to save, then join the array
-    # [name, cohort] => name,cohort
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
-    file.puts csv_line
+def create_file_if_missing(filename)
+  FileUtils.touch(filename) unless File.exists?(filename)
+end
+
+def write_students_to_csv_file(filename)
+  # wb specifies write in binary mode
+  CSV.open(filename, "wb") do |file|
+    @students.each do |student|
+      file << [student[:name], student[:cohort]]
+    end
   end
 end
 
