@@ -92,7 +92,7 @@ def save_students
   file.close
 end
 
-def try_load_students
+def initialise_students
   filename = ARGV.first || "students.csv"
 
   # does the file exist?
@@ -118,5 +118,5 @@ def load_students_from_file(filename = "students.csv")
   file.close
 end
 
-try_load_students
+initialise_students
 run_interactive_menu
