@@ -76,18 +76,23 @@ def print_footer
 end
 
 def save_students(filename)
+  if filename == ""
+    puts "Unable to save file - you must provide a filename"
+    return
+  else
   # opens the file. If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
-  file = File.open(filename, "w")
-  @students.each do |student|
-    # create an array from the data we want to save, then join the array
-    # [name, cohort] => name,cohort
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
-    file.puts csv_line
+    file = File.open(filename, "w")
+    @students.each do |student|
+      # create an array from the data we want to save, then join the array
+      # [name, cohort] => name,cohort
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
+      file.puts csv_line
+    end
+    file.close
   end
-  file.close
 end
 
 def get_filename_from_user
