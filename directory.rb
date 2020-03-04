@@ -83,15 +83,19 @@ def save_students(filename)
   # opens the file. If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
     file = File.open(filename, "w")
-    @students.each do |student|
-      # create an array from the data we want to save, then join the array
-      # [name, cohort] => name,cohort
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
-      file.puts csv_line
-    end
+    write_students_to_file(file)
     file.close
+  end
+end
+
+def write_students_to_file(file)
+  @students.each do |student|
+    # create an array from the data we want to save, then join the array
+    # [name, cohort] => name,cohort
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    # writes the string to the file (cf puts, which is equiv to STDOUT.puts)
+    file.puts csv_line
   end
 end
 
