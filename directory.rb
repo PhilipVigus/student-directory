@@ -99,34 +99,25 @@ end
 
 def initialise_students
   filename = ARGV.first || "students.csv"
-
-  # does the file exist?
-  if File.exists?(filename)
-    load_students_from_file(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Unable to find #{filename} so it will be created"
-  end
+  load_students_from_file(filename)
 end
 
 def load_students_from_file(filename)
-
   if File.exists?(filename)
-    # opens in read mode
     file = File.open(filename, "r")
-
     # readlines reads the whole file and returns it as an array of individual lines
-    file.readlines.each do |line|
-      # chomp gets rid of the trailing \n
-      name, cohort = line.chomp.split(",")  # parallel assignment
-      create_student(name, cohort.to_sym)
-    end
-
+    create_students_from_file_lines(file.readlines)
     file.close
   else
-    puts "Unable to load as #{filename} does not exist"
+    puts "Unable to load file - #{filename} does not exist"
   end
+end
 
+def create_students_from_file_lines(lines)
+  lines.each do |line|
+    name, cohort = line.chomp.split(",")  # parallel assignment
+    create_student(name, cohort.to_sym)
+  end
 end
 
 initialise_students
