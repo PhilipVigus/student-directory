@@ -1,3 +1,5 @@
+require 'csv'
+
 # instance variable on the global instance?
 @students = []
 
@@ -113,18 +115,13 @@ end
 
 def load_students_from_file(filename)
   if File.exists?(filename)
-    # readlines reads the whole file and returns it as an array of individual lines
-    File.open(filename, "r") { |file| create_students_from_file_lines(file.readlines) }
+    CSV.foreach(filename) do |row|
+      name, cohort = row
+      create_student(name, cohort.to_sym)
+    end
     puts "Students successfully loaded from #{filename}"
   else
     puts "Unable to load file - #{filename} does not exist"
-  end
-end
-
-def create_students_from_file_lines(lines)
-  lines.each do |line|
-    name, cohort = line.chomp.split(",")  # parallel assignment
-    create_student(name, cohort.to_sym)
   end
 end
 
