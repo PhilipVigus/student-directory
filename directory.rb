@@ -80,16 +80,11 @@ end
 
 def save_students(filename)
   if filename != ""
-    #create_file_if_missing(filename)
     write_students_to_csv_file(filename)
     puts "Students successfully saved to #{filename}"
   else
     puts "Unable to save file - you must provide a filename"
   end
-end
-
-def create_file_if_missing(filename)
-  FileUtils.touch(filename) unless File.exists?(filename)
 end
 
 def write_students_to_csv_file(filename)
