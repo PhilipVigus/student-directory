@@ -76,9 +76,10 @@ def print_footer
 end
 
 def save_students
+  filename = get_filename_from_user
   # opens the file. If it doesn't exist it creates it
   # w = write-only permission (for read-write it would be w+)
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
 
   @students.each do |student|
     # create an array from the data we want to save, then join the array
@@ -90,6 +91,11 @@ def save_students
   end
 
   file.close
+end
+
+def get_filename_from_user
+  puts "Please enter the filename"
+  get_user_input
 end
 
 def initialise_students
